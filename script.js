@@ -66,10 +66,6 @@ function filterArray(array) {
 
 // Create DOM Elements for each list item
 function createItemEl(columnEl, column, item, index) {
-  // console.log("item", item);
-  // console.log("index", index);
-  // console.log("column", column);
-  // TODO add delete btn to each task
   const listEl = document.createElement("li");
   listEl.classList.add("drag-item");
   listEl.textContent = item;
@@ -78,6 +74,17 @@ function createItemEl(columnEl, column, item, index) {
   listEl.contentEditable = true;
   listEl.id = index;
   listEl.setAttribute("onfocusout", `updateItem(${index}, ${column})`);
+
+  // adding close btn https://www.w3schools.com/howto/howto_js_close_list_items.asp
+  const closeBtn = document.createElement("i");
+  // closeBtn.textContent = "x";
+  closeBtn.classList.add("close");
+  closeBtn.classList.add("far");
+  closeBtn.classList.add("fa-times-circle");
+  closeBtn.contentEditable = false;
+  closeBtn.setAttribute("onclick", `deleteItem(${index}, ${column})`);
+  listEl.appendChild(closeBtn);
+
   // Append
   columnEl.appendChild(listEl);
 }
@@ -120,6 +127,16 @@ function updateDOM() {
   // Run getSavedColumns only once, Update Local Storage
   updatedOnLoad = true;
   updateSavedColumns();
+}
+
+function deleteItem(id, column) {
+  const selectedArray = listArrays[column];
+  const selectedColumnEl = listColumns[column].children;
+  if (!dragging) {
+    selectedColumnEl[id].textContent = "";
+    delete selectedArray[id];
+    updateDOM();
+  }
 }
 
 // update item value or delete if empty

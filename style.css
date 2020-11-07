@@ -36,6 +36,13 @@ ul {
   padding: 0;
 }
 
+/* Style the close button (span) */
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+}
+
 .drag-container {
   margin: 20px;
 }
