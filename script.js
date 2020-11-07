@@ -104,12 +104,34 @@ function updateDOM() {
   });
 
   // Run getSavedColumns only once, Update Local Storage
+  updatedOnLoad = true;
+  updateSavedColumns();
+}
+
+// allows arrays to reflect drag and rop items
+function rebuildArrays() {
+  backlogListArray = [];
+  for (let i = 0; i < backlogList.children.length; i++) {
+    backlogListArray.push(backlogList.children[i].textContent);
+  }
+  progressListArray = [];
+  for (let i = 0; i < progressList.children.length; i++) {
+    progressListArray.push(progressList.children[i].textContent);
+  }
+  completeListArray = [];
+  for (let i = 0; i < completeList.children.length; i++) {
+    completeListArray.push(completeList.children[i].textContent);
+  }
+  onHoldListArray = [];
+  for (let i = 0; i < onHoldList.children.length; i++) {
+    onHoldListArray.push(onHoldList.children[i].textContent);
+  }
+  updateDOM();
 }
 
 // when Item starts dragging
 function drag(e) {
   draggedItem = e.target;
-  console.log(draggedItem);
 }
 
 // column allows for Item to drop https://www.w3schools.com/html/html5_draganddrop.asp
@@ -120,9 +142,8 @@ function allowDrop(e) {
 // when item enters to column area
 function dragEnter(column) {
   currentColumn = column;
-  console.log("dragEnter", currentColumn, previousColumn);
   listColumns[column].classList.add("over");
-
+  // to only highlight selected column
   if (previousColumn !== undefined && currentColumn !== previousColumn) {
     listColumns[previousColumn].classList.remove("over");
   }
@@ -139,6 +160,7 @@ function drop(e) {
   // add item to the column
   const parent = listColumns[currentColumn];
   parent.appendChild(draggedItem);
+  rebuildArrays();
 }
 
 // On Load
