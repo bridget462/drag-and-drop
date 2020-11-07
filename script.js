@@ -3,7 +3,7 @@ const saveItemBtns = document.querySelectorAll(".solid");
 const addItemContainers = document.querySelectorAll(".add-container");
 const addItems = document.querySelectorAll(".add-item");
 // Item Lists
-const itemLists = document.querySelectorAll(".drag-item-list");
+const listColumns = document.querySelectorAll(".drag-item-list");
 const backlogList = document.getElementById("backlog-list");
 const progressList = document.getElementById("progress-list");
 const completeList = document.getElementById("complete-list");
@@ -108,6 +108,21 @@ function updateDOM() {
 function drag(e) {
   draggedItem = e.target;
   console.log(draggedItem);
+}
+
+// column allows for Item to drop https://www.w3schools.com/html/html5_draganddrop.asp
+function allowDrop(e) {
+  e.preventDefault();
+}
+
+// when item enters to column area
+function dragEnter(column) {
+  console.log(listColumns[column]);
+}
+
+// dropping item in the column
+function drop(e) {
+  e.preventDefault();
 }
 
 // On Load
