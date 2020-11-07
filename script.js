@@ -109,6 +109,15 @@ function updateDOM() {
   updateSavedColumns();
 }
 
+// add item to the column list, and reset the text box for next time
+function addToColumn(column) {
+  const itemText = addItems[column].textContent;
+  const selectedArray = listArrays[column];
+  selectedArray.push(itemText);
+  addItems[column].textContent = "";
+  updateDOM();
+}
+
 // show add item input box
 function showInputBox(column) {
   addBtns[column].style.visibility = "hidden";
@@ -121,6 +130,7 @@ function hideInputBox(column) {
   addBtns[column].style.visibility = "visible";
   saveItemBtns[column].style.display = "none";
   addItemContainers[column].style.display = "none";
+  addToColumn(column);
 }
 
 // allows arrays to reflect drag and rop items
