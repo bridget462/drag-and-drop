@@ -21,6 +21,7 @@ let listArrays = []; // store saved lists
 
 // Drag Functionality
 let draggedItem;
+let dragging = false;
 // TODO make these private variable using closure
 let currentColumn;
 let previousColumn;
@@ -68,7 +69,7 @@ function createItemEl(columnEl, column, item, index) {
   // console.log("item", item);
   // console.log("index", index);
   // console.log("column", column);
-
+  // TODO add delete btn to each task
   const listEl = document.createElement("li");
   listEl.classList.add("drag-item");
   listEl.textContent = item;
@@ -125,11 +126,15 @@ function updateDOM() {
 function updateItem(id, column) {
   const selectedArray = listArrays[column];
   const selectedColumnEl = listColumns[column].children;
-  if (!selectedColumnEl[id].textContent) {
-    delete selectedArray[id];
+  if (!dragging) {
+    if (!selectedColumnEl[id].textContent) {
+      delete selectedArray[id];
+    } else {
+      selectedArray[id] = selectedColumnEl[id].textContent;
+    }
+    console.log(selectedArray);
+    updateDOM();
   }
-  console.log(selectedArray);
-  updateDOM();
 }
 
 // add item to the column list, and reset the text box for next time
@@ -180,6 +185,7 @@ function rebuildArrays() {
 // when Item starts dragging
 function drag(e) {
   draggedItem = e.target;
+  dragging = true;
 }
 
 // column allows for Item to drop https://www.w3schools.com/html/html5_draganddrop.asp
@@ -208,6 +214,7 @@ function drop(e) {
   // add item to the column
   const parent = listColumns[currentColumn];
   parent.appendChild(draggedItem);
+  dragging = false;
   rebuildArrays();
 }
 
