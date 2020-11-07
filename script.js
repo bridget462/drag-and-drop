@@ -21,6 +21,7 @@ let listArrays = []; // store saved lists
 
 // Drag Functionality
 let draggedItem;
+// TODO make these private variable using closure
 let currentColumn;
 let previousColumn;
 
@@ -106,6 +107,20 @@ function updateDOM() {
   // Run getSavedColumns only once, Update Local Storage
   updatedOnLoad = true;
   updateSavedColumns();
+}
+
+// show add item input box
+function showInputBox(column) {
+  addBtns[column].style.visibility = "hidden";
+  saveItemBtns[column].style.display = "flex";
+  addItemContainers[column].style.display = "flex";
+}
+
+// hide item input box
+function hideInputBox(column) {
+  addBtns[column].style.visibility = "visible";
+  saveItemBtns[column].style.display = "none";
+  addItemContainers[column].style.display = "none";
 }
 
 // allows arrays to reflect drag and rop items
