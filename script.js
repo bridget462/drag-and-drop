@@ -22,6 +22,7 @@ let listArrays = []; // store saved lists
 // Drag Functionality
 let draggedItem;
 let currentColumn;
+let previousColumn;
 
 // Get Arrays from localStorage if available, set default values if not
 function getSavedColumns() {
@@ -118,8 +119,14 @@ function allowDrop(e) {
 
 // when item enters to column area
 function dragEnter(column) {
-  listColumns[column].classList.add("over");
   currentColumn = column;
+  console.log("dragEnter", currentColumn, previousColumn);
+  listColumns[column].classList.add("over");
+
+  if (previousColumn !== undefined && currentColumn !== previousColumn) {
+    listColumns[previousColumn].classList.remove("over");
+  }
+  previousColumn = currentColumn;
 }
 
 // dropping item in the column
